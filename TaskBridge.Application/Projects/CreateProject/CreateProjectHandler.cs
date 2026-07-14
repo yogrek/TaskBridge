@@ -61,7 +61,7 @@ public sealed class CreateProjectHandler
         }
 
         var nameAlreadyExist = await _context.Projects
-            .AnyAsync(x => x.WorkSpaceId == command.WorkspaceId &&
+            .AnyAsync(x => x.WorkspaceId == command.WorkspaceId &&
                 x.Name == command.Name.Trim(),
                 cancellationToken);
 
@@ -85,7 +85,7 @@ public sealed class CreateProjectHandler
 
         var result = new CreateProjectResult(
             project.Id,
-            project.WorkSpaceId,
+            project.WorkspaceId,
             project.Name,
             project.Description,
             project.Status,

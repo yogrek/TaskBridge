@@ -10,7 +10,7 @@ namespace TaskBridge.Domain.Projects;
 public sealed class Project
 {
     public Guid Id { get; private set; }
-    public Guid WorkSpaceId { get; private set; }
+    public Guid WorkspaceId { get; private set; }
     public string Name { get; private set; } = null!;
     public string? Description { get; private set; };
     public ProjectStatus Status { get; private set; }
@@ -31,7 +31,7 @@ public sealed class Project
         DateTimeOffset createdAt)
     {
         Id = Guid.NewGuid();
-        WorkSpaceId = workspaceId;
+        WorkspaceId = workspaceId;
         Name = name.Trim();
         Description = description;
         Status = ProjectStatus.Active;

@@ -38,7 +38,7 @@ public class GetProjectTasksHandler
 
         var isMember = await _context.WorkspaceMembers
             .AnyAsync(
-                x => x.WorkspaceId == project.WorkSpaceId &&
+                x => x.WorkspaceId == project.WorkspaceId &&
                      x.UserId == _currentUser.UserId,
                 cancellationToken);
 
