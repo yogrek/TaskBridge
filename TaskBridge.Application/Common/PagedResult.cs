@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace TaskBridge.Application.Common;
 
-internal class PagedResult
-{
-}
+/// <summary>
+/// Represents PagedResult.
+/// </summary>
+public sealed record PagedResult<T>(
+    IReadOnlyList<T> Items,
+    int Page,
+    int PageSize,
+    int TotalCount);

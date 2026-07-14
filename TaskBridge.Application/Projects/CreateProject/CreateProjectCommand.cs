@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace TaskBridge.Application.Projects.CreateProject;
 
-internal class CreateProjectCommand
-{
-}
+/// <summary>
+/// Represents CreateProjectCommand.
+/// </summary>
+public sealed record CreateProjectCommand(
+    Guid WorkspaceId,
+    string Name,
+    string? Description);

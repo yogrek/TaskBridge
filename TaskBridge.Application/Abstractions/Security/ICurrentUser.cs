@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace TaskBridge.Application.Abstractions.Security;
 
-internal class ICurrentUser
+/// <summary>
+/// Represents ICurrentUser.
+/// </summary>
+public interface ICurrentUser
 {
+    Guid UserId { get; }
+    bool IsAuthenticated { get; }
 }

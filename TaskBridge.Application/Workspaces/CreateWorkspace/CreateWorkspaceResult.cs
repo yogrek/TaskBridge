@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace TaskBridge.Application.Workspaces.CreateWorkspace;
 
-internal class CreateWorkspaceResult
-{
-}
+/// <summary>
+/// Represents CreateWorkspaceResult.
+/// </summary>
+public sealed record CreateWorkspaceResult(
+    Guid WorkspaceId,
+    string Name,
+    Guid OwnerId,
+    DateTimeOffset CreatedAt);

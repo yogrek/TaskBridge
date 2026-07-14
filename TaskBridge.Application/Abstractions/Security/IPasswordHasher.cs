@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace TaskBridge.Application.Abstractions.Security;
 
-internal class IPasswordHasher
+/// <summary>
+/// Represents IPasswordHasher.
+/// </summary>
+public interface IPasswordHasher
 {
 }

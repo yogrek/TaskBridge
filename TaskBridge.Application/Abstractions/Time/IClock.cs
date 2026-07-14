@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace TaskBridge.Application.Abstractions.Time;
 
-internal class IClock
+/// <summary>
+/// Represents IClock.
+/// </summary>
+public interface IClock
 {
+    DateTimeOffset UtcNow { get; }
 }

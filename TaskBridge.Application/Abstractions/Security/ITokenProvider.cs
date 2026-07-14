@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace TaskBridge.Application.Abstractions.Security;
 
-internal class ITokenProvider
+/// <summary>
+/// Represents ITokenProvider.
+/// </summary>
+public interface ITokenProvider
 {
 }
