@@ -1,0 +1,9 @@
+<Solution>
+  <Project Path="TaskBridge.Api/TaskBridge.Api.csproj" />
+  <Project Path="TaskBridge.Application/TaskBridge.Application.csproj" />
+  <Project Path="TaskBridge.Contracts/TaskBridge.Contracts.csproj" />
+  <Project Path="TaskBridge.DB/TaskBridge.DB.csproj" />
+  <Project Path="TaskBridge.Desktop/TaskBridge.Desktop.csproj" />
+  <Project Path="TaskBridge.Domain/TaskBridge.Domain.csproj" />
+  <Project Path="TaskBridge.Infrastructure/TaskBridge.Infrastructure.csproj" />
+</Solution>
