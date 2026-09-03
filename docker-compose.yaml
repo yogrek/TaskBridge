@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: taskbridge-postgres
+    environment:
+      - POSTGRES_DB: taskbridge
+      - POSTGRES_USER: taskbridge
+      - POSTGRES_PASSWORD: taskbridge
+    ports:
+      - "5432:5432"
+    volumes:
+      - taskbridge_postgres_data:/var/lib/postgresql/taskbridge_postgres_data
+
+volumes:
+  taskbridge_postgres_data:
