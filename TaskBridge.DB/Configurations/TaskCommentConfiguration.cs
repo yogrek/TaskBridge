@@ -19,8 +19,7 @@ public sealed class TaskCommentConfiguration : IEntityTypeConfiguration<TaskComm
         builder.HasKey(x => x.Id);
 
         builder.Property(x => x.Id)
-            .HasColumnName("id")
-            .ValueGeneratedNever();
+            .HasColumnName("id");
 
         builder.Property(x => x.TaskId)
             .HasColumnName("task_id")
@@ -32,6 +31,7 @@ public sealed class TaskCommentConfiguration : IEntityTypeConfiguration<TaskComm
 
         builder.Property(x => x.Text)
             .HasColumnName("text")
+            .HasMaxLength(5000)
             .IsRequired();
 
         builder.Property(x => x.CreatedAt)
@@ -54,7 +54,8 @@ public sealed class TaskCommentConfiguration : IEntityTypeConfiguration<TaskComm
             .HasForeignKey(x => x.AuthorId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasIndex(x => new { x.TaskId, x.CreatedAt });
         builder.HasIndex(x => x.AuthorId);
+        builder.HasIndex(x => x.TaskId);
+        builder.HasIndex(x => x.CreatedAt);
     }
 }

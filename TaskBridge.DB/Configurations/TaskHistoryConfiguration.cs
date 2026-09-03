@@ -19,8 +19,7 @@ public sealed class TaskHistoryConfiguration : IEntityTypeConfiguration<TaskHist
         builder.HasKey(x => x.Id);
 
         builder.Property(x => x.Id)
-            .HasColumnName("id")
-            .ValueGeneratedNever();
+            .HasColumnName("id");
 
         builder.Property(x => x.TaskId)
             .HasColumnName("task_id")
@@ -36,10 +35,12 @@ public sealed class TaskHistoryConfiguration : IEntityTypeConfiguration<TaskHist
             .IsRequired();
 
         builder.Property(x => x.OldValue)
-            .HasColumnName("old_value");
+            .HasColumnName("old_value")
+            .HasMaxLength(5000);
 
         builder.Property(x => x.NewValue)
-            .HasColumnName("new_value");
+            .HasColumnName("new_value")
+            .HasMaxLength(5000);
 
         builder.Property(x => x.ChangedAt)
             .HasColumnName("changed_at")
@@ -56,7 +57,11 @@ public sealed class TaskHistoryConfiguration : IEntityTypeConfiguration<TaskHist
             .HasForeignKey(x => x.ChangedBy)
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasIndex(x => new { x.TaskId, x.ChangedAt });
+
+        builder.HasIndex(x => x.TaskId);
         builder.HasIndex(x => x.ChangedBy);
+        builder.HasIndex(x => x.ChangedAt);
+
+        builder.HasIndex(x => new { x.TaskId, x.ChangedAt });
     }
 }

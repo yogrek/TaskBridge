@@ -33,7 +33,8 @@ public sealed class TaskItemConfiguration : IEntityTypeConfiguration<TaskItem>
             .IsRequired();
 
         builder.Property(x => x.Description)
-            .HasColumnName("description");
+            .HasColumnName("description")
+            .HasMaxLength(5000);
 
         builder.Property(x => x.Status)
             .HasColumnName("status")
@@ -71,9 +72,8 @@ public sealed class TaskItemConfiguration : IEntityTypeConfiguration<TaskItem>
             .HasColumnType("timestamp with time zone");
 
         builder.Property(x => x.Version)
-            .HasColumnName("version")
-            .IsConcurrencyToken()
-            .IsRequired();
+            .HasColumnName("xmin")
+            .IsRowVersion();
 
         builder.HasOne<Project>()
             .WithMany()
@@ -88,11 +88,18 @@ public sealed class TaskItemConfiguration : IEntityTypeConfiguration<TaskItem>
         builder.HasOne<User>()
             .WithMany()
             .HasForeignKey(x => x.AssigneeId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.SetNull);
 
         builder.HasIndex(x => x.ProjectId);
         builder.HasIndex(x => x.AuthorId);
         builder.HasIndex(x => x.AssigneeId);
+        builder.HasIndex(x => x.Status);
+        builder.HasIndex(x => x.Priority);
+        builder.HasIndex(x => x.DueDate);
+        builder.HasIndex(x => x.UpdatedAt);
+
         builder.HasIndex(x => new { x.ProjectId, x.Status });
+        builder.HasIndex(x => new { x.ProjectId, x.AssigneeId });
+        builder.HasIndex(x => new { x.ProjectId, x.UpdatedAt });
     }
 }

@@ -19,8 +19,7 @@ public sealed class WorkspaceMemberConfiguration : IEntityTypeConfiguration<Work
         builder.HasKey(x => x.Id);
 
         builder.Property(x => x.Id)
-            .HasColumnName("id")
-            .ValueGeneratedNever();
+            .HasColumnName("id");
 
         builder.Property(x => x.WorkspaceId)
             .HasColumnName("workspace_id")
@@ -37,7 +36,6 @@ public sealed class WorkspaceMemberConfiguration : IEntityTypeConfiguration<Work
 
         builder.Property(x => x.JoinedAt)
             .HasColumnName("joined_at")
-            .HasColumnType("timestamp with time zone")
             .IsRequired();
 
         builder.HasOne<Workspace>()

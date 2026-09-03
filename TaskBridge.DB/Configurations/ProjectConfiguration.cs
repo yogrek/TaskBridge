@@ -32,7 +32,8 @@ public sealed class ProjectConfiguration : IEntityTypeConfiguration<Project>
             .IsRequired();
 
         builder.Property(x => x.Description)
-            .HasColumnName("description");
+            .HasColumnName("description")
+            .HasMaxLength(2000);
 
         builder.Property(x => x.Status)
             .HasColumnName("status")
