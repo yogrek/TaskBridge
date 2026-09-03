@@ -21,59 +21,58 @@ public static class DevelopmentDataSeeder
         AppDbContext context,
         CancellationToken cancellationToken = default)
     {
-        var dataAlreadySeeded = await context.Users
-            .AnyAsync(user => user.Email == DeveloperEmail, cancellationToken);
-
-        if (dataAlreadySeeded)
-        {
+        if (await context.Users.AnyAsync(cancellationToken))
             return;
-        }
 
         var now = DateTimeOffset.UtcNow;
+
         var user = new User(
-            DeveloperEmail,
-            "TaskBridge Developer",
-            "Development-only-password-hash",
+            email: "admin@taskbridge.local",
+            displayName: "TaskBridge Admin",
+            passwordHash: "dev-password-hash",
+            createdAt: now);
+
+        var workspace = new Workspace(
+            name: "Demo Wordkspace",
+            ownerId: user.Id,
+            createdAt: now);
+
+        var member = new WorkspaceMember(
+            workspace.Id,
+            user.Id,
+            WorkspaceRole.Owner,
             now);
 
-        var workspace = new Workspace("TaskBridge", user.Id, now);
-        var member = new WorkspaceMember(workspace.Id, user.Id, WorkspaceRole.Owner, now);
         var project = new Project(
             workspace.Id,
-            "Getting started",
-            "Initial project created for local development.",
+            "Demo project",
+            "Project for local development.",
             now);
+
         var task = new TaskItem(
             project.Id,
-            "Configure TaskBridge",
-            "Configure the local application and create the first project task.",
+            "Prepare MVP architecture.",
+            "Create first architecture documents for TaskBridge.",
             user.Id,
             user.Id,
-            TaskPriority.Normal,
+            TaskPriority.High,
             now.AddDays(7),
             now);
-        var comment = new TaskComment(
-            task.Id,
-            user.Id,
-            "This is development seed data.",
-            now,
-            now);
-        var taskCreated = new TaskHistory(
+
+        var history = new TaskHistory(
             task.Id,
             user.Id,
             TaskHistoryChangeType.TaskCreated,
             oldValue: null,
             newValue: task.Title,
             changedAt: now);
-        var commentAdded = new TaskHistory(
-            task.Id,
-            user.Id,
-            TaskHistoryChangeType.CommentAdded,
-            oldValue: null,
-            newValue: comment.Text,
-            changedAt: now);
 
-        context.AddRange(user, workspace, member, project, task, comment, taskCreated, commentAdded);
+        context.Users.Add(user);
+        context.Workspaces.Add(workspace);
+        context.WorkspaceMembers.Add(member);
+        context.Projects.Add(project);
+        context.Tasks.Add(task);
+        context.TaskHistory.Add(history);
 
         await context.SaveChangesAsync(cancellationToken);
     }

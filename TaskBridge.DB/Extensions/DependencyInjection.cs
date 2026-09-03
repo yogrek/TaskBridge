@@ -18,14 +18,19 @@ public static class DependencyInjection
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        var connectionString = configuration.GetConnectionString("TaskBridgeDatabase")
+        var connectionString = configuration.GetConnectionString("TaskBridge")
             ?? throw new InvalidOperationException(
                 "Connection string 'TaskBridgeDatabase' is not configured.");
 
+        //services.AddDbContext<AppDbContext>(options =>
+        //    options.UseNpgsql(
+        //        connectionString,
+        //        npgsqlOptions => npgsqlOptions.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName)));
+
         services.AddDbContext<AppDbContext>(options =>
-            options.UseNpgsql(
-                connectionString,
-                npgsqlOptions => npgsqlOptions.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName)));
+        {
+            options.UseNpgsql(connectionString);
+        });
 
         services.AddScoped<IAppDbContext>(serviceProvider =>
             serviceProvider.GetRequiredService<AppDbContext>());
