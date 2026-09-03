@@ -12,7 +12,7 @@ public sealed class Project
     public Guid Id { get; private set; }
     public Guid WorkspaceId { get; private set; }
     public string Name { get; private set; } = null!;
-    public string? Description { get; private set; };
+    public string? Description { get; private set; }
     public ProjectStatus Status { get; private set; }
     public DateTimeOffset CreatedAt { get; private set; }
     public DateTimeOffset ArchivedAt { get; private set; }
