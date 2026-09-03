@@ -49,7 +49,6 @@ secrets.json
 
 # The TaskBridge.DB project name matches the *.db pattern on Windows.
 !TaskBridge.DB/
-!TaskBridge.DB/**
 
 # Logs and temporary files
 *.log
