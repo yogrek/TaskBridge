@@ -1,6 +1,3 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Identity.Web;
-
 using TaskBridge.Api.CurrentUser;
 using TaskBridge.Api.ExceptionHandling;
 using TaskBridge.Api.Mapping;
