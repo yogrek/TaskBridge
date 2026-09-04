@@ -12,8 +12,6 @@ namespace TaskBridge.DB.Seed;
 /// </summary>
 public static class DevelopmentDataSeeder
 {
-    private const string DeveloperEmail = "developer@taskbridge.local";
-
     /// <summary>
     /// Adds a demonstration workspace with a project and a task when it is absent.
     /// </summary>
