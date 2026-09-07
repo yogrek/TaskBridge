@@ -19,7 +19,7 @@ public static class ResultExtensions
             Detail = error.Message,
             Status = GetStatusCode(error.Type),
             Type = error.Code,
-            Instance = controller.HttpContext.Request.Path`
+            Instance = controller.HttpContext.Request.Path
         };
 
         problemDetails.Extensions["traceId"] = controller.HttpContext.TraceIdentifier;

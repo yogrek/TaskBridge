@@ -110,12 +110,16 @@ public sealed class CreateTaskHandler
             task.Id,
             task.ProjectId,
             task.Title,
+            task.Description,
             task.Status,
             task.Priority,
             task.AuthorId,
             task.AssigneeId,
             task.DueDate,
-            task.CreatedAt);
+            task.CreatedAt,
+            task.UpdatedAt,
+            task.CompletedAt,
+            task.Version);
 
         return Result<CreateTaskResult>.Success(result);
     }

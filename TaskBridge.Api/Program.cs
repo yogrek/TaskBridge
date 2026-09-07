@@ -22,7 +22,9 @@ builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddApplication();
 builder.Services.AddTaskBridgeDatabase(builder.Configuration);
 
-builder.Services.AddAutoMapper(typeof(ApiMappingProfile));
+builder.Services.AddAutoMapper(
+    cfg => { },
+    typeof(ApiMappingProfile));
 
 builder.Services.AddHttpContextAccessor();
 
