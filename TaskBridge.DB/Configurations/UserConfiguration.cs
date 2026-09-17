@@ -26,6 +26,11 @@ public sealed class UserConfiguration : IEntityTypeConfiguration<User>
             .HasMaxLength(320)
             .IsRequired();
 
+        builder.Property(x => x.NormalizedEmail)
+            .HasColumnName("normalized_email")
+            .HasMaxLength(320)
+            .IsRequired();
+
         builder.Property(x => x.DisplayName)
             .HasColumnName("display_name")
             .HasMaxLength(200)
@@ -45,7 +50,7 @@ public sealed class UserConfiguration : IEntityTypeConfiguration<User>
             .HasColumnType("timestamp with time zone")
             .IsRequired();
 
-        builder.HasIndex(x => x.Email)
+        builder.HasIndex(x => x.NormalizedEmail)
             .IsUnique();
     }
 }

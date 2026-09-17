@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 
+using TaskBridge.Application.Authentification.Login;
+using TaskBridge.Application.Authentification.Register;
 using TaskBridge.Application.Comments.AddTaskComment;
 using TaskBridge.Application.Projects.CreateProject;
 using TaskBridge.Application.Tasks.ChangeTaskStatus;
@@ -7,6 +9,7 @@ using TaskBridge.Application.Tasks.CreateTask;
 using TaskBridge.Application.Tasks.GetProjectTasks;
 using TaskBridge.Application.Tasks.GetTaskDetails;
 using TaskBridge.Application.Workspaces.CreateWorkspace;
+using TaskBridge.Contracts.Authentification;
 using TaskBridge.Contracts.Comments;
 using TaskBridge.Contracts.History;
 using TaskBridge.Contracts.Projects;
@@ -80,5 +83,9 @@ public sealed class ApiMappingProfile : Profile
                 opt => opt.MapFrom(src => src.CommentId))
             .ForMember(dest => dest.UpdatedAt,
                 opt => opt.MapFrom(src => src.CreatedAt));
+
+        CreateMap<RegisterResult, AuthResponse>();
+
+        CreateMap<LoginResult, AuthResponse>();
     }
 }

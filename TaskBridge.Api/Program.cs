@@ -1,9 +1,12 @@
 using TaskBridge.Api.CurrentUser;
 using TaskBridge.Api.ExceptionHandling;
+using TaskBridge.Api.Extensions;
 using TaskBridge.Api.Mapping;
 using TaskBridge.Application;
 using TaskBridge.Application.Abstractions.Security;
 using TaskBridge.DB.Extensions;
+using TaskBridge.Infrastructure.Extensions;
+using TaskBridge.Infrastructure.Security;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +24,7 @@ builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
 builder.Services.AddApplication();
 builder.Services.AddTaskBridgeDatabase(builder.Configuration);
+builder.Services.AddInfrastructure(builder.Configuration);
 
 builder.Services.AddAutoMapper(
     cfg => { },
@@ -30,7 +34,10 @@ builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddScoped<ICurrentUser, CurrentUser>();
 
-builder.Services.AddAuthentication();
+var jwtOptions = builder.Configuration.GetSection(JwtOptions.SectionName).Get<JwtOptions>()
+    ?? throw new InvalidOperationException("JWT configuration is missing.");
+builder.Services.AddAuthentification(jwtOptions);
+
 builder.Services.AddAuthorization();
 
 builder.Services.AddEndpointsApiExplorer();

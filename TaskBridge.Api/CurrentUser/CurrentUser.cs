@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 using TaskBridge.Application.Abstractions.Security;
 
@@ -16,9 +17,12 @@ public sealed class CurrentUser : ICurrentUser
     {
         get
         {
-            var userId = _httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var value = Principal?.FindFirstValue(JwtRegisteredClaimNames.Sub) ??
+                 Principal?.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            return Guid.TryParse(userId, out var parsed) ? parsed : Guid.Empty;
+            return Guid.TryParse(value, out var id) ? id : Guid.Empty;
         }
     }
+
+    private ClaimsPrincipal? Principal => _httpContextAccessor.HttpContext?.User;
 }

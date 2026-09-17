@@ -25,6 +25,7 @@
   <ItemGroup>
     <ProjectReference Include="..\TaskBridge.Contracts\TaskBridge.Contracts.csproj" />
     <ProjectReference Include="..\TaskBridge.DB\TaskBridge.DB.csproj" />
+    <ProjectReference Include="..\TaskBridge.Infrastructure\TaskBridge.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

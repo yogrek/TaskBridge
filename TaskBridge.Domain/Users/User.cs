@@ -9,6 +9,7 @@ public sealed class User
 {
     public Guid Id { get; private set; }
     public string Email { get; private set; } = null!;
+    public string NormalizedEmail { get; private set; } = null!;
     public string DisplayName { get; private set; } = null!;
     public string PasswordHash { get; private set; } = null!;
     public bool IsActive { get; private set; }
@@ -25,19 +26,27 @@ public sealed class User
         string passwordHash,
         DateTimeOffset createdAt)
     {
+        if (string.IsNullOrWhiteSpace(email))
+            throw new DomainException("Email cannot be empty");
+
+        if (string.IsNullOrWhiteSpace(displayName))
+            throw new DomainException("Display name cannot be empty");
+
         Id = Guid.NewGuid();
-        Email = email;
+
+        Email = email.Trim();
+        NormalizedEmail = NormalizeEmail(email);
+
         DisplayName = displayName;
         PasswordHash = passwordHash;
+
         IsActive = true;
         CreatedAt = createdAt;
     }
 
-    public void Activate() =>
-        IsActive = true;
+    public void Activate() => IsActive = true;
 
-    public void Deactivate() =>
-        IsActive = false;
+    public void Deactivate() => IsActive = false;
 
     public void ChangeDisplayName(string newDisplayName)
     {
@@ -54,4 +63,7 @@ public sealed class User
 
         PasswordHash = newPasswordHash;
     }
+
+    private static string NormalizeEmail(string email) =>
+        email.Trim().ToLowerInvariant();
 }
