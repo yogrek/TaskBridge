@@ -61,7 +61,7 @@ public sealed class ChangeTaskStatusHandler
         if (task.Version != command.ExpectedVersion)
         {
             return Result<ChangeTaskStatusResult>.Failure(
-                Error.Conflict("Task.VersionConfilct", "Task was changed by another user"));
+                Error.Conflict("Task.VersionConflict", "Task was changed by another user"));
         }
 
         var canChangeStatus = await _permissionService.CanChangeTaskStatusAsync(

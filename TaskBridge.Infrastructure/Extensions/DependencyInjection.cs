@@ -3,6 +3,8 @@ using Microsoft.Extensions.DependencyInjection;
 
 using TaskBridge.Application.Abstractions.Security;
 using TaskBridge.Infrastructure.Security;
+using TaskBridge.Infrastructure.Time;
+using TaskBridge.Application.Abstractions.Time;
 
 namespace TaskBridge.Infrastructure.Extensions;
 
@@ -14,6 +16,7 @@ public static class DependencyInjection
 
         services.AddScoped<IPasswordHasher, PasswordHasher>();
         services.AddScoped<IAccessTokenProvider, JwtAccessTokenProvider>();
+        services.AddSingleton<IClock, SystemClock>();
 
         return services;
     }

@@ -61,7 +61,8 @@ public sealed class TasksController : ControllerBase
                 Detail = "Invalid task priority",
                 Status = StatusCodes.Status400BadRequest,
                 Type = "Task.InvalidPriority",
-                Instance = HttpContext.Request.Path
+                Instance = HttpContext.Request.Path,
+                Extensions = { ["traceId"] = HttpContext.TraceIdentifier }
             });
         }
 
@@ -108,7 +109,8 @@ public sealed class TasksController : ControllerBase
                     Detail = "Invalid task status",
                     Status = StatusCodes.Status400BadRequest,
                     Type = "Task.InvalidStatus",
-                    Instance = HttpContext.Request.Path
+                    Instance = HttpContext.Request.Path,
+                    Extensions = { ["traceId"] = HttpContext.TraceIdentifier }
                 });
             }
 
@@ -167,7 +169,8 @@ public sealed class TasksController : ControllerBase
                 Detail = "Invalid task status",
                 Status = StatusCodes.Status400BadRequest,
                 Type = "Task.InvalidStatus",
-                Instance = HttpContext.Request.Path
+                Instance = HttpContext.Request.Path,
+                Extensions = { ["traceId"] = HttpContext.TraceIdentifier }
             });
         }
 

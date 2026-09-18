@@ -1,4 +1,10 @@
 <Solution>
+  <Folder Name="/Tests/">
+    <Project Path="Tests/TaskBridge.ArchitectureTests/TaskBridge.ArchitectureTests.csproj" />
+    <Project Path="Tests/TaskBridge.ApiTests/TaskBridge.ApiTests.csproj" />
+    <Project Path="Tests/TaskBridge.IntegrationTests/TaskBridge.IntegrationTests.csproj" Id="a6ffc214-c895-4492-aa08-14a33580b051" />
+    <Project Path="Tests/TaskBridge.UnitTests/TaskBridge.UnitTests.csproj" Id="9b001931-82e6-459c-af43-6597978118c1" />
+  </Folder>
   <Project Path="TaskBridge.Api/TaskBridge.Api.csproj" />
   <Project Path="TaskBridge.Application/TaskBridge.Application.csproj" />
   <Project Path="TaskBridge.Contracts/TaskBridge.Contracts.csproj" />

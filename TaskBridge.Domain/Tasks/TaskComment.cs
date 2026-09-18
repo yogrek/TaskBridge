@@ -24,6 +24,9 @@ public sealed class TaskComment
         DateTimeOffset createdAt,
         DateTimeOffset updatedAt)
     {
+        if (string.IsNullOrWhiteSpace(text))
+            throw new TaskBridge.Domain.Common.DomainException("Comment text cannot be empty");
+
         Id = Guid.NewGuid();
         TaskId = taskId;
         AuthorId = authorId;
@@ -35,7 +38,7 @@ public sealed class TaskComment
     public void Edit(string text, DateTimeOffset changedAt)
     {
         if (string.IsNullOrWhiteSpace(text))
-            throw new ArgumentNullException("Comment text cannot be empty");
+            throw new TaskBridge.Domain.Common.DomainException("Comment text cannot be empty");
 
         Text = text.Trim();
         UpdatedAt = changedAt;

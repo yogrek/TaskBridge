@@ -49,7 +49,7 @@ public sealed class RegisterHandler
             .AnyAsync(x => x.NormalizedEmail == normalizedEmail, cancellationToken);
         if (userExist)
         {
-            return Result<RegisterResult>.Failure(Error.Validation(
+            return Result<RegisterResult>.Failure(Error.Conflict(
                 "Auth.EmailAlreadyExists",
                 "User with this email already exists."));
         }

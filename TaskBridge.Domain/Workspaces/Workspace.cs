@@ -21,8 +21,11 @@ public sealed class Workspace
         Guid ownerId,
         DateTimeOffset createdAt)
     {
+        if (string.IsNullOrWhiteSpace(name))
+            throw new DomainException("Workspace name cannot be empty");
+
         Id = Guid.NewGuid();
-        Name = name;
+        Name = name.Trim();
         OwnerId = ownerId;
         CreatedAt = createdAt;
     }

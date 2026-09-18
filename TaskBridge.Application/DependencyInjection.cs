@@ -9,6 +9,8 @@ using TaskBridge.Application.Tasks.CreateTask;
 using TaskBridge.Application.Tasks.GetProjectTasks;
 using TaskBridge.Application.Tasks.GetTaskDetails;
 using TaskBridge.Application.Workspaces.CreateWorkspace;
+using TaskBridge.Application.Authentification.Login;
+using TaskBridge.Application.Authentification.Register;
 
 namespace TaskBridge.Application;
 
@@ -18,6 +20,8 @@ public static class DependencyInjection
     {
         services.AddScoped<IPermissionService, PermissionService>();
 
+        services.AddScoped<RegisterHandler>();
+        services.AddScoped<LoginHandler>();
         services.AddScoped<CreateWorkspaceHandler>();
         services.AddScoped<CreateProjectHandler>();
         services.AddScoped<CreateTaskHandler>();

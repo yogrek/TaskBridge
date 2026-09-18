@@ -26,12 +26,14 @@ public sealed record GetTaskDetailsResult(
 
 public sealed record TaskCommentItem(
     Guid CommentId,
+    Guid TaskId,
     Guid AuthorId,
     string Text,
     DateTimeOffset CreatedAt);
 
 public sealed record TaskHistoryItem(
     Guid HistoryId,
+    Guid TaskId,
     Guid ChangedBy,
     TaskHistoryChangeType ChangeType,
     string? OldValue,

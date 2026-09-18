@@ -31,7 +31,7 @@ public sealed class PermissionService : IPermissionService
 
         var role = await GetRoleAsync(userId, workspaceId, cancellationToken);
 
-        return role is WorkspaceRole.Admin or WorkspaceRole.ProjectManager or WorkspaceRole.Member;
+        return role is WorkspaceRole.Owner or WorkspaceRole.Admin or WorkspaceRole.ProjectManager or WorkspaceRole.Member;
     }
 
     public async Task<bool> CanAssignTaskAsync(Guid userId, Guid projectId, Guid assigneeId, CancellationToken cancellationToken)

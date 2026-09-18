@@ -30,6 +30,9 @@ public sealed class Project
         string? description,
         DateTimeOffset createdAt)
     {
+        if (string.IsNullOrWhiteSpace(name))
+            throw new DomainException("Project name cannot be empty");
+
         Id = Guid.NewGuid();
         WorkspaceId = workspaceId;
         Name = name.Trim();

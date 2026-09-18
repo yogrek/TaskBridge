@@ -22,31 +22,38 @@ public sealed class ApiMappingProfile : Profile
 {
     public ApiMappingProfile()
     {
-        CreateMap<CreateWorkspaceResult, WorkspaceResponse>()
-            .ForMember(dest => dest.Id,
-                opt => opt.MapFrom(src => src.WorkspaceId));
+        CreateMap<CreateWorkspaceResult, WorkspaceResponse>(MemberList.None)
+            .ConstructUsing(src => new WorkspaceResponse(
+                src.WorkspaceId,
+                src.Name,
+                src.OwnerId,
+                src.CreatedAt));
 
-        CreateMap<CreateProjectResult, ProjectResponse>()
-            .ForMember(dest => dest.Id,
-                opt => opt.MapFrom(src => src.ProjectId))
-            .ForMember(dest => dest.Status,
-                opt => opt.MapFrom(src => src.Status.ToString()))
-            .ForMember(dest => dest.ArchivedAt,
-                opt => opt.MapFrom(_ => (DateTimeOffset?)null));
+        CreateMap<CreateProjectResult, ProjectResponse>(MemberList.None)
+            .ConstructUsing(src => new ProjectResponse(
+                src.ProjectId,
+                src.WorkspaceId,
+                src.Name,
+                src.Description,
+                src.Status.ToString(),
+                src.CreatedAt,
+                null));
 
-        CreateMap<CreateTaskResult, TaskResponse>()
-            .ForMember(dest => dest.Id,
-                opt => opt.MapFrom(src => src.TaskId))
-            .ForMember(dest => dest.Description,
-                opt => opt.MapFrom(src => src.Description))
-            .ForMember(dest => dest.Status,
-                opt => opt.MapFrom(src => src.Status.ToString()))
-            .ForMember(dest => dest.Priority,
-                opt => opt.MapFrom(src => src.Priority.ToString()))
-            .ForMember(dest => dest.UpdatedAt,
-                opt => opt.MapFrom(src => src.CreatedAt))
-            .ForMember(dest => dest.CompletedAt,
-                opt => opt.MapFrom(_ => (DateTimeOffset?)null));
+        CreateMap<CreateTaskResult, TaskResponse>(MemberList.None)
+            .ConstructUsing(src => new TaskResponse(
+                src.TaskId,
+                src.ProjectId,
+                src.Title,
+                src.Description,
+                src.Status.ToString(),
+                src.Priority.ToString(),
+                src.AuthorId,
+                src.AssigneeId,
+                src.DueDate,
+                src.CreatedAt,
+                src.UpdatedAt,
+                src.CompletedAt,
+                src.Version));
 
         CreateMap<ChangeTaskStatusResult, ChangeTaskStatusResponse>()
             .ForMember(dest => dest.TaskId,
@@ -54,35 +61,75 @@ public sealed class ApiMappingProfile : Profile
             .ForMember(dest => dest.Status,
                 opt => opt.MapFrom(src => src.Status.ToString()));
 
-        CreateMap<ProjectTaskListItem, TaskListItemResponse>()
-            .ForMember(dest => dest.Id,
-                opt => opt.MapFrom(src => src.TaskId))
-            .ForMember(dest => dest.Status,
-                opt => opt.MapFrom(src => src.Status.ToString()))
-            .ForMember(dest => dest.Priority,
-                opt => opt.MapFrom(src => src.Priority.ToString()));
+        CreateMap<ProjectTaskListItem, TaskListItemResponse>(MemberList.None)
+            .ConstructUsing(src => new TaskListItemResponse(
+                src.TaskId,
+                src.Title,
+                src.Status.ToString(),
+                src.Priority.ToString(),
+                src.AssigneeId,
+                src.DueDate,
+                src.UpdatedAt,
+                src.Version));
 
-        CreateMap<GetTaskDetailsResult, TaskListItemResponse>()
-            .ForMember(dest => dest.Id,
-                opt => opt.MapFrom(src => src.TaskId));
+        CreateMap<GetTaskDetailsResult, TaskDetailsResponse>(MemberList.None)
+            .ConstructUsing(src => new TaskDetailsResponse(
+                src.TaskId,
+                src.ProjectId,
+                src.Title,
+                src.Description,
+                src.Status.ToString(),
+                src.Priority.ToString(),
+                src.AuthorId,
+                src.AssigneeId,
+                src.DueDate,
+                src.CreatedAt,
+                src.UpdatedAt,
+                src.CompletedAt,
+                src.Version,
+                src.Comments.Select(comment => new TaskCommentResponse(
+                    comment.CommentId,
+                    comment.TaskId,
+                    comment.AuthorId,
+                    comment.Text,
+                    comment.CreatedAt,
+                    comment.CreatedAt)).ToList(),
+                src.History.Select(history => new TaskHistoryResponse(
+                    history.HistoryId,
+                    history.TaskId,
+                    history.ChangedBy,
+                    history.ChangeType.ToString(),
+                    history.OldValue,
+                    history.NewValue,
+                    history.ChangedAt)).ToList()));
 
-        CreateMap<TaskCommentItem, TaskCommentResponse>()
-            .ForMember(dest => dest.Id,
-                opt => opt.MapFrom(src => src.CommentId))
-            .ForMember(dest => dest.UpdatedAt,
-                opt => opt.MapFrom(src => src.CreatedAt));
+        CreateMap<TaskCommentItem, TaskCommentResponse>(MemberList.None)
+            .ConstructUsing(src => new TaskCommentResponse(
+                src.CommentId,
+                src.TaskId,
+                src.AuthorId,
+                src.Text,
+                src.CreatedAt,
+                src.CreatedAt));
 
-        CreateMap<TaskHistoryItem, TaskHistoryResponse>()
-            .ForMember(dest => dest.Id,
-                opt => opt.MapFrom(src => src.HistoryId))
-            .ForMember(dest => dest.ChangeType,
-                opt => opt.MapFrom(src => src.ChangeType.ToString()));
+        CreateMap<TaskHistoryItem, TaskHistoryResponse>(MemberList.None)
+            .ConstructUsing(src => new TaskHistoryResponse(
+                src.HistoryId,
+                src.TaskId,
+                src.ChangedBy,
+                src.ChangeType.ToString(),
+                src.OldValue,
+                src.NewValue,
+                src.ChangedAt));
 
-        CreateMap<AddTaskCommentResult, TaskCommentResponse>()
-            .ForMember(dest => dest.Id,
-                opt => opt.MapFrom(src => src.CommentId))
-            .ForMember(dest => dest.UpdatedAt,
-                opt => opt.MapFrom(src => src.CreatedAt));
+        CreateMap<AddTaskCommentResult, TaskCommentResponse>(MemberList.None)
+            .ConstructUsing(src => new TaskCommentResponse(
+                src.CommentId,
+                src.TaskId,
+                src.AuthorId,
+                src.Text,
+                src.CreatedAt,
+                src.CreatedAt));
 
         CreateMap<RegisterResult, AuthResponse>();
 

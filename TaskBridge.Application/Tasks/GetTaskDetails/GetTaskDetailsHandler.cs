@@ -62,6 +62,7 @@ public sealed class GetTaskDetailsHandler
             .OrderBy(x => x.CreatedAt)
             .Select(x => new TaskCommentItem(
                 x.Id,
+                x.TaskId,
                 x.AuthorId,
                 x.Text,
                 x.CreatedAt))
@@ -73,6 +74,7 @@ public sealed class GetTaskDetailsHandler
             .OrderByDescending(x => x.ChangedAt)
             .Select(x => new TaskHistoryItem(
                 x.Id,
+                x.TaskId,
                 x.ChangedBy,
                 x.ChangeType,
                 x.OldValue,
