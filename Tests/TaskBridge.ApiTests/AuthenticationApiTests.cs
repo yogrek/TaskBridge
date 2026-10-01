@@ -87,6 +87,22 @@ public sealed class AuthenticationApiTests : ApiTestBase
         await AssertProblemDetailsAsync(response, HttpStatusCode.Unauthorized, "Unauthorized", "Auth.InvalidCredentials");
     }
 
+    [Fact]
+    public async Task Login_TooManyRequests_ShouldReturnTooManyRequests()
+    {
+        using var client = Factory.CreateClient();
+        var request = new LoginRequest("missing@test.com", "Password123!");
+
+        for (var attempt = 0; attempt < 10; attempt++)
+        {
+            using var response = await client.PostAsJsonAsync("/api/auth/login", request);
+            Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
+        }
+
+        using var rejectedResponse = await client.PostAsJsonAsync("/api/auth/login", request);
+        Assert.Equal(HttpStatusCode.TooManyRequests, rejectedResponse.StatusCode);
+    }
+
     private static async Task AssertProblemDetailsAsync(
         HttpResponseMessage response,
         HttpStatusCode expectedStatus,
